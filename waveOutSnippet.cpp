@@ -12,6 +12,8 @@
 
 #include <windows.h>
 
+#pragma comment(lib, "winmm.lib")
+
 // The audio will be processed in buffers this many samples long:
 #define BUFLEN 512
 

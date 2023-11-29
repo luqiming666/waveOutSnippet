@@ -70,18 +70,17 @@ WavHeader header;
 std::vector<int8_t> pcmData;
 int64_t bytesUsed = 0; // bytes which have been played
 
-int parseWaveFile()
+int parseWaveFile(const char* srcFile)
 {
 	// Codes from ChatGPT 3.5 *_^
 	// 打开.wav文件
-	std::string src_file = "D:\\Media\\nanjing_8c.wav"; //"D:\\Media\\Ring07.wav"; //nanjing_8c.wav //"7.1.wav"
-	std::ifstream file(src_file, std::ios::binary);
+	std::ifstream file(srcFile, std::ios::binary);
 	if (!file.is_open()) {
 		std::cerr << "Failed to open file." << std::endl;
 		return 1;
 	}
 
-	std::cout << "Parsing the wave file: " << src_file << std::endl;
+	std::cout << "Parsing the wave file: " << srcFile << std::endl;
 
 	// 读取文件头
 	//WavHeader header;
@@ -246,10 +245,16 @@ bool openAudio()
 }
 
 ////////////////////////////////////////////////////////////////
-int main()
+int main(int argc, char* argv[])
 {
 #if DATA_SOURCE_FROM_FILE
-	parseWaveFile();
+	if (argc < 2) {
+		// Test some local files... "D:\\Media\\Ring07.wav"; //nanjing_8c.wav //"7.1.wav"
+		parseWaveFile("D:\\Media\\Ring07.wav");
+	}
+	else {
+		parseWaveFile(argv[1]);
+	}
 #endif
 
 	bool success = openAudio();
